@@ -60,14 +60,15 @@ final class MailerUser
 
     public function welcomeLayout(array $value): void
     {
-        $this->recoveryLayout = $value;
+        $this->welcomeLayout = $value;
     }
 
     public function getConfirmationSubject(): string
     {
         if (empty($this->confirmationSubject)) {
-            $this->confirmationSubject(
-                $this->translator->translate('Confirm account on {name}', ['name' => $this->applicationName]),
+            $this->confirmationSubject = $this->translator->translate(
+                'Confirm account on {applicationName}',
+                ['applicationName' => $this->applicationName],
             );
         }
 
@@ -76,12 +77,10 @@ final class MailerUser
 
     public function getNewPasswordSubject(): string
     {
-        if ($this->newPasswordSubject === '') {
-            $this->newPasswordSubject(
-                $this->translator->translate(
-                    'Your password on {name} has been changed',
-                    ['name' => $this->applicationName],
-                ),
+        if (empty($this->newPasswordSubject)) {
+            $this->newPasswordSubject = $this->translator->translate(
+                'Your password on {applicationName} has been changed',
+                ['applicationName' => $this->applicationName],
             );
         }
 
@@ -90,9 +89,10 @@ final class MailerUser
 
     public function getReconfirmationSubject(): string
     {
-        if ($this->reconfirmationSubject === '') {
-            $this->reconfirmationSubject(
-                $this->translator->translate('Confirm email change on {name}', ['name' => $this->applicationName]),
+        if (empty($this->reconfirmationSubject)) {
+            $this->reconfirmationSubject = $this->translator->translate(
+                'Confirm email change on {applicationName}',
+                ['applicationName' => $this->applicationName]
             );
         }
 
@@ -102,8 +102,9 @@ final class MailerUser
     public function getRecoverySubject(): string
     {
         if (empty($this->recoverySubject)) {
-            $this->recoverySubject(
-                $this->translator->translate('Complete password reset on {name}', ['name' => $this->applicationName]),
+            $this->recoverySubject = $this->translator->translate(
+                'Complete password reset on {applicationName}',
+                ['applicationName' => $this->applicationName]
             );
         }
 
@@ -112,9 +113,10 @@ final class MailerUser
 
     public function getWelcomeSubject(): string
     {
-        if ($this->welcomeSubject === '') {
-            $this->welcomeSubject(
-                $this->translator->translate('Welcome to {name}', ['name' => $this->applicationName]),
+        if (empty($this->welcomeSubject)) {
+            $this->welcomeSubject = $this->translator->translate(
+                'Welcome to {applicationName}',
+                ['applicationName' => $this->applicationName],
             );
         }
 
@@ -148,8 +150,10 @@ final class MailerUser
 
     public function sendConfirmationMessage(string $email, array $params = []): bool
     {
-        $params = array_merge(['applicationName' => $this->applicationName], $params);
-        $message = $this->mailer->compose($this->confirmLayout, ['params' => $params])
+        $message = $this->mailer->compose(
+            $this->confirmLayout,
+            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+        )
             ->setFrom($this->emailFrom)
             ->setSubject($this->getConfirmationSubject())
             ->setTo($email);
@@ -159,7 +163,10 @@ final class MailerUser
 
     public function sendRecoveryMessage(string $email, array $params = []): bool
     {
-        $message = $this->mailer->compose($this->recoveryLayout, ['params' => $params])
+        $message = $this->mailer->compose(
+            $this->recoveryLayout,
+            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+        )
             ->setFrom($this->emailFrom)
             ->setSubject($this->getRecoverySubject())
             ->setTo($email);
@@ -169,10 +176,13 @@ final class MailerUser
 
     public function sendWelcomeMessage(string $email, array $params = []): bool
     {
-        $message = $this->mailer->compose($this->welcomeLayout, ['params' => $params])
-        ->setFrom($this->emailFrom)
-        ->setSubject($this->getRecoverySubject())
-        ->setTo($email);
+        $message = $this->mailer->compose(
+            $this->welcomeLayout,
+            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+        )
+            ->setFrom($this->emailFrom)
+            ->setSubject($this->getWelcomeSubject())
+            ->setTo($email);
 
         return $this->send($message);
     }
