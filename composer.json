@@ -1,15 +1,23 @@
 {
-    "name": "yii-extension/template",
+    "name": "yii-extension/user-mailer-service",
     "type": "library",
-    "description": "_____",
+    "description": "Mailer service for module user",
     "keywords": [
-        "_____"
+        "yii3",
+        "user",
+        "mailer",
+        "service"
     ],
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "^7.4|^8.0"
+        "php": "^7.4|^8.0",
+        "yii-extension/user-translations": "^1.0.0",
+        "yiisoft/html": "^3.0@dev",
+        "yiisoft/mailer": "^3.0@dev",
+        "yiisoft/mailer-swiftmailer": "^3.0@dev",
+        "yiisoft/yii-event": "^3.0@dev"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
@@ -18,17 +26,23 @@
     },
     "autoload": {
         "psr-4": {
-            "Template\\": "src"
+            "Yii\\Extension\\User\\Service\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Template\\Tests\\": "tests"
+            "Yii\\Extension\\User\\Service\\Tests\\": "tests"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"
+        },
+        "config-plugin": {
+            "params": "config/params.php",
+            "common": [
+                "config/common/*.php"
+            ]
         }
     },
     "config": {
