@@ -6,6 +6,7 @@ return [
     'yii-extension/user-mailer-service' => [
         'applicationName' => 'module user',
         'emailFrom' => 'administrator@example.com',
+        'viewPath' => '@user-view-mailer',
 
         // config layouts email
         'confirmLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
@@ -24,11 +25,5 @@ return [
         'aliases' => [
             '@user-view-mailer' =>  dirname(__DIR__) . '/storage/mail',
         ]
-    ],
-
-    'yiisoft/mailer' => [
-        'composer' => [
-            'composerView' => '@user-view-mailer',
-        ],
     ],
 ];

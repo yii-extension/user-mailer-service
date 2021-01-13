@@ -6,6 +6,7 @@ namespace Yii\Extension\User\Service;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Yiisoft\Mailer\Composer;
 use Yiisoft\Mailer\MailerInterface;
 use Yiisoft\Mailer\MessageInterface;
 use Yiisoft\Translator\TranslatorInterface;
@@ -31,8 +32,15 @@ final class MailerUser
     private MailerInterface $mailer;
     private TranslatorInterface $translator;
 
-    public function __construct(LoggerInterface $logger, MailerInterface $mailer, TranslatorInterface $translator)
-    {
+    private Composer $composer;
+
+    public function __construct(
+        Composer $composer,
+        LoggerInterface $logger,
+        MailerInterface $mailer,
+        TranslatorInterface $translator
+    ) {
+        $this->composer = $composer;
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->translator = $translator;
@@ -56,6 +64,11 @@ final class MailerUser
     public function recoveryLayout(array $value): void
     {
         $this->recoveryLayout = $value;
+    }
+
+    public function viewPath(string $value): void
+    {
+        $this->composer->setViewPath($value);
     }
 
     public function welcomeLayout(array $value): void
