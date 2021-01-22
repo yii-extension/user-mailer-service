@@ -10,6 +10,7 @@ return [
 
         // config layouts email
         'confirmLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
+        'reconfirmationLayout' => ['html' => 'reconfirmation', 'text' => 'text/reconfirmation'],
         'recoveryLayout' => ['html' => 'recovery', 'text' => 'text/recovery'],
         'welcomeLayout' =>  ['html' => 'welcome', 'text' => 'text/welcome'],
 

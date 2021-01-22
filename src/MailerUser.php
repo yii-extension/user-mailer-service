@@ -19,6 +19,7 @@ final class MailerUser
 
     /** layouts emails */
     private array $confirmLayout = [];
+    private array $reconfirmationLayout = [];
     private array $recoveryLayout = [];
     private array $welcomeLayout = [];
 
@@ -59,6 +60,11 @@ final class MailerUser
     public function confirmLayout(array $value): void
     {
         $this->confirmLayout = $value;
+    }
+
+    public function reconfirmationLayout(array $value): void
+    {
+        $this->reconfirmationLayout = $value;
     }
 
     public function recoveryLayout(array $value): void
@@ -169,6 +175,19 @@ final class MailerUser
         )
             ->setFrom($this->emailFrom)
             ->setSubject($this->getConfirmationSubject())
+            ->setTo($email);
+
+        return $this->send($message);
+    }
+
+    public function sendReconfirmationMessage(string $email, array $params = []): bool
+    {
+        $message = $this->mailer->compose(
+            $this->reconfirmationLayout,
+            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+        )
+            ->setFrom($this->emailFrom)
+            ->setSubject($this->getRecoverySubject())
             ->setTo($email);
 
         return $this->send($message);

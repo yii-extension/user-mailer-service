@@ -13,6 +13,7 @@ return [
         'applicationName()' => [$params['yii-extension/user-mailer-service']['applicationName']],
         'emailFrom()' => [$params['yii-extension/user-mailer-service']['emailFrom']],
         'confirmLayout()' => [$params['yii-extension/user-mailer-service']['confirmLayout']],
+        'reconfirmationLayout()' => [$params['yii-extension/user-mailer-service']['reconfirmationLayout']],
         'recoveryLayout()' => [$params['yii-extension/user-mailer-service']['recoveryLayout']],
         'welcomeLayout()' => [$params['yii-extension/user-mailer-service']['welcomeLayout']],
         'confirmationSubject()' => [$params['yii-extension/user-mailer-service']['confirmationSubject']],
