@@ -13,10 +13,10 @@ use Yiisoft\Translator\TranslatorInterface;
 <?= $translator->translate('Hello, {username},', ['username' => $params['username']], 'user-mailer') ?>
 
 <?= $translator->translate(
-    'Your account on {applicationName} has a new password',
+    'Your account on {applicationName} has a new password.',
     ['applicationName' => $applicationName],
     'user-mailer'
-) ?>.
+) ?>
 
 <?= $translator->translate('We have generated a password for you:') ?>
 <strong><?= $params['password'] ?></strong>

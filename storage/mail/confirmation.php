@@ -17,10 +17,10 @@ use Yiisoft\Translator\TranslatorInterface;
 
 <p class = 'mail-confirmation'>
     <?= $translator->translate(
-        'Thank you for signing up on {applicationName}',
+        'Thank you for signing up on {applicationName}.',
         ['applicationName' => $applicationName],
         'user-mailer'
-    ) ?>.
+    ) ?>
     <?= $translator->translate('In order to complete your registration, please click the link below:', [], 'user-mailer') ?>
 </p>
 
