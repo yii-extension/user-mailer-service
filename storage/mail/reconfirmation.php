@@ -22,7 +22,7 @@ use Yiisoft\Translator\TranslatorInterface;
         'user-mailer'
     ) ?>
 
-    <?= $translator->translate('In order to complete your request, please click the link below.', [], 'user-mailer') ?>
+    <?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
 </p>
 
 <p class = 'mail-reconfirmation'>

@@ -30,7 +30,7 @@ use Yiisoft\Translator\TranslatorInterface;
 
 <?php if (isset($params['url'])) : ?>
     <p class = 'mailer-welcome'>
-        <?= $translator->translate('In order to complete your registration, please click the link below.', [], 'user-mailer') ?>
+        <?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
     </p>
     <p class = 'mailer-welcome'>
         <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>

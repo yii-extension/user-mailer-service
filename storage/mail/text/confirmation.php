@@ -13,7 +13,7 @@ use Yiisoft\Translator\TranslatorInterface;
 <?= $translator->translate('Hello, {username},', ['username' => $params['username']], 'user-mailer') ?>
 
 <?= $translator->translate('Thank you for signing up on {applicationName}.', ['applicationName' => $applicationName], 'user-mailer') ?>
-<?= $translator->translate('In order to complete your registration, please click the link below:', [], 'user-mailer') ?>
+<?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
 
 <strong><?= $params['url'] ?></strong>
 

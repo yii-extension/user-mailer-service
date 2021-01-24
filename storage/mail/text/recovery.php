@@ -19,7 +19,7 @@ use Yiisoft\Translator\TranslatorInterface;
     'user-mailer'
 ) ?>
 
-<?= $translator->translate('Please click the link below to complete your password reset.', [], 'user-mailer') ?>
+<?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
 
 <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
 

@@ -21,7 +21,7 @@ use Yiisoft\Translator\TranslatorInterface;
         ['applicationName' => $applicationName],
         'user-mailer'
     ) ?>
-    <?= $translator->translate('In order to complete your registration, please click the link below:', [], 'user-mailer') ?>
+    <?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
 </p>
 
 <p class = 'mail-confirmation'>

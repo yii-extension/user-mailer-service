@@ -25,11 +25,10 @@ use Yiisoft\Translator\TranslatorInterface;
 <?php endif ?>
 
 <?php if (isset($params['url'])) : ?>
-    <?= $translator->translate('In order to complete your registration, please click the link below.', [], 'user-mailer') ?>
+    <?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
 
     <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
 <?php endif ?>
 
 <?= $translator->translate('If you cannot click the link, please try pasting the text into your browser.', [], 'user-mailer') ?>
 <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
-
