@@ -11,17 +11,17 @@ use Yiisoft\Translator\TranslatorInterface;
  * @var TranslatorInterface $translator
  */
 ?>
-<?= $translator->translate('Hello, {username}', ['username' => $params['username']]) ?>.
+<?= $translator->translate('Hello, {username},', ['username' => $params['username']], 'user-mailer') ?>
 
 <?= $translator->translate(
-   'We have received a request to reset the password for your account on {applicationName}',
-   ['applicationName' => $applicationName],
-) ?>.
+    'We have received a request to reset the password for your account on {applicationName}.',
+    ['applicationName' => $applicationName],
+    'user-mailer'
+) ?>
 
-<?= $translator->translate('Please click the link below to complete your password reset') ?>.
+<?= $translator->translate('Please click the link below to complete your password reset.', [], 'user-mailer') ?>
 
 <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
 
-<?= $translator->translate('If you cannot click the link, please try pasting the text into your browser') ?>.
-<?= $translator->translate('If you did not make this request you can ignore this email') ?>.
-
+<?= $translator->translate('If you cannot click the link, please try pasting the text into your browser.', [], 'user-mailer') ?>
+<?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>

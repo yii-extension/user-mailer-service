@@ -11,18 +11,20 @@ use Yiisoft\Translator\TranslatorInterface;
  */
 ?>
 <p class = 'mail-new_password'>
-    <?= $translator->translate('Hello, {username}', ['username' => $params['username']]) ?>.
+    <?= $translator->translate('Hello, {username},', ['username' => $params['username']], 'user-mailer') ?>
 </p>
 
 <p class = 'mail-new_password'>
     <?= $translator->translate(
-        'Your account on {applicationName} has a new password',
+        'Your account on {applicationName} has a new password.',
         ['applicationName' => $applicationName],
-    ) ?>.
+        'user-mailer'
+    ) ?>
 
-    <?= $translator->translate('We have generated a password for you: ') ?><strong><?= $params['password'] ?></strong>
+    <?= $translator->translate('We have generated a password for you:', [], 'user-mailer') ?>
+    <strong><?= $params['password'] ?></strong>
 </p>
 
 <p class = 'mail-new_password'>
-    <?= $translator->translate('If you did not make this request you can ignore this email') ?>.
+    <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
 </p>

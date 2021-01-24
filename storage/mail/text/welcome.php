@@ -11,23 +11,25 @@ use Yiisoft\Translator\TranslatorInterface;
  * @var TranslatorInterface $translator
  */
 ?>
-<?= $translator->translate('Hello, {username}', ['username' => $params['username']]) ?>.
+<?= $translator->translate('Hello, {username},', ['username' => $params['username']], 'user-mailer') ?>
 
 <?= $translator->translate(
-    'Your account on {applicationName} has been created',
+    'Your account on {applicationName} has been created.',
     ['applicationName' => $applicationName]
-) ?>.
+    'user-mailer'
+) ?>
 
 <?php if ($params['showPassword']) : ?>
-    <?= $translator->translate('We have generated a password for you: ') ?><strong><?= $params['password'] ?></strong>
+    <?= $translator->translate('We have generated a password for you:', [], 'user-mailer') ?>
+    <strong><?= $params['password'] ?></strong>
 <?php endif ?>
 
 <?php if (isset($params['url'])) : ?>
-    <?= $translator->translate('In order to complete your registration, please click the link below') ?>.
+    <?= $translator->translate('In order to complete your registration, please click the link below.', [], 'user-mailer') ?>
 
     <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
 <?php endif ?>
 
-<?= $translator->translate('If you cannot click the link, please try pasting the text into your browser') ?>.
-<?= $translator->translate('If you did not make this request you can ignore this email') ?>.
+<?= $translator->translate('If you cannot click the link, please try pasting the text into your browser.', [], 'user-mailer') ?>
+<?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
 
