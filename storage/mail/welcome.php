@@ -18,8 +18,8 @@ use Yiisoft\Translator\TranslatorInterface;
 <p class = 'mailer-welcome'>
     <?= $translator->translate(
         'Your account on {applicationName} has been created.',
-        ['applicationName' => $applicationName]
-        'user-mailer'
+        ['applicationName' => $applicationName],
+        'user-mailer',
     ) ?>
 
     <?php if ($params['showPassword']) : ?>
@@ -38,6 +38,10 @@ use Yiisoft\Translator\TranslatorInterface;
 <?php endif ?>
 
 <p class = 'mailer-welcome'>
-    <?= $translator->translate('If you cannot click the link, please try pasting the text into your browser.', [], 'user-mailer') ?>
+    <?= $translator->translate(
+        'If you cannot click the link, please try pasting the text into your browser.',
+        [],
+        'user-mailer',
+    ) ?>
     <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
 </p>

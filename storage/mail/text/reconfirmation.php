@@ -16,7 +16,7 @@ use Yiisoft\Translator\TranslatorInterface;
 <?= $translator->translate(
     'We have received a request to change the email address for your account on {applicationName}.',
     ['applicationName' => $applicationName],
-    'user-mailer'
+    'user-mailer',
 ) ?>
 
 <?= $translator->translate('In order to complete your request, please click the link below:') ?>

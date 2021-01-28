@@ -19,7 +19,7 @@ use Yiisoft\Translator\TranslatorInterface;
     <?= $translator->translate(
         'We have received a request to change the email address for your account on {applicationName}.',
         ['applicationName' => $applicationName],
-        'user-mailer'
+        'user-mailer',
     ) ?>
 
     <?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
@@ -30,6 +30,10 @@ use Yiisoft\Translator\TranslatorInterface;
 </p>
 
 <p class = 'mail-reconfirmation'>
-    <?= $translator->translate('If you cannot click the link, please try pasting the text into your browser.', [], 'user-mailer') ?>
+    <?= $translator->translate(
+        'If you cannot click the link, please try pasting the text into your browser.',
+        [],
+        'user-mailer',
+    ) ?>
     <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
 </p>

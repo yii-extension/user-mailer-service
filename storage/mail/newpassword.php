@@ -18,7 +18,7 @@ use Yiisoft\Translator\TranslatorInterface;
     <?= $translator->translate(
         'Your account on {applicationName} has a new password.',
         ['applicationName' => $applicationName],
-        'user-mailer'
+        'user-mailer',
     ) ?>
 
     <?= $translator->translate('We have generated a password for you:', [], 'user-mailer') ?>
