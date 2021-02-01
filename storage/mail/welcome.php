@@ -6,7 +6,7 @@ use Yiisoft\Html\Html;
 use Yiisoft\Translator\TranslatorInterface;
 
 /**
- * @var string $applicationName
+ * @var string $moduleName
  * @var array $params
  * @var TranslatorInterface $translator
  */
@@ -17,11 +17,13 @@ use Yiisoft\Translator\TranslatorInterface;
 
 <p class = 'mailer-welcome'>
     <?= $translator->translate(
-        'Your account on {applicationName} has been created.',
-        ['applicationName' => $applicationName],
+        'Your account on {moduleName} has been created.',
+        ['moduleName' => $moduleName],
         'user-mailer',
     ) ?>
+</p>
 
+<p class = 'mailer-welcome'>
     <?php if ($params['showPassword']) : ?>
         <?= $translator->translate('We have generated a password for you:', [], 'user-mailer') ?>
         <strong><?= $params['password'] ?></strong>
@@ -35,13 +37,11 @@ use Yiisoft\Translator\TranslatorInterface;
     <p class = 'mailer-welcome'>
         <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
     </p>
+    <p class = 'mailer-welcome'>
+        <?= $translator->translate(
+            'If you cannot click the link, please try pasting the text into your browser.',
+            [],
+            'user-mailer',
+        ) ?>
+    </p>
 <?php endif ?>
-
-<p class = 'mailer-welcome'>
-    <?= $translator->translate(
-        'If you cannot click the link, please try pasting the text into your browser.',
-        [],
-        'user-mailer',
-    ) ?>
-    <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
-</p>

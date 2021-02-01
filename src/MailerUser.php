@@ -4,18 +4,24 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
+use Closure;
 use Exception;
 use Psr\Log\LoggerInterface;
-use Yiisoft\Mailer\Composer;
+use Yiisoft\Mailer\File;
 use Yiisoft\Mailer\MailerInterface;
+use Yiisoft\Mailer\MessageBodyRenderer;
 use Yiisoft\Mailer\MessageInterface;
 use Yiisoft\Translator\TranslatorInterface;
 
 final class MailerUser
 {
     /** general config */
-    private string $applicationName = '';
     private string $emailFrom = '';
+    private string $moduleName = '';
+    private string $signatureImageEmail = '';
+    private string $signatureTextEmail = '';
+    private ?File $file = null;
+    private string $viewPath = '';
 
     /** layouts emails */
     private array $confirmLayout = [];
@@ -29,27 +35,24 @@ final class MailerUser
     private string $reconfirmationSubject = '';
     private string $recoverySubject = '';
     private string $welcomeSubject = '';
+
     private LoggerInterface $logger;
     private MailerInterface $mailer;
+    private MessageBodyRenderer $messageBodyRenderer;
     private TranslatorInterface $translator;
 
     private Composer $composer;
 
     public function __construct(
-        Composer $composer,
         LoggerInterface $logger,
         MailerInterface $mailer,
+        MessageBodyRenderer $messageBodyRenderer,
         TranslatorInterface $translator
     ) {
-        $this->composer = $composer;
         $this->logger = $logger;
         $this->mailer = $mailer;
+        $this->messageBodyRenderer = $messageBodyRenderer;
         $this->translator = $translator;
-    }
-
-    public function applicationName(string $value): void
-    {
-        $this->applicationName = $value;
     }
 
     public function emailFrom(string $value): void
@@ -57,37 +60,13 @@ final class MailerUser
         $this->emailFrom = $value;
     }
 
-    public function confirmLayout(array $value): void
-    {
-        $this->confirmLayout = $value;
-    }
-
-    public function reconfirmationLayout(array $value): void
-    {
-        $this->reconfirmationLayout = $value;
-    }
-
-    public function recoveryLayout(array $value): void
-    {
-        $this->recoveryLayout = $value;
-    }
-
-    public function viewPath(string $value): void
-    {
-        $this->composer->setViewPath($value);
-    }
-
-    public function welcomeLayout(array $value): void
-    {
-        $this->welcomeLayout = $value;
-    }
-
     public function getConfirmationSubject(): string
     {
         if (empty($this->confirmationSubject)) {
             $this->confirmationSubject = $this->translator->translate(
-                'Confirm account on {applicationName}',
-                ['applicationName' => $this->applicationName],
+                'Confirm account on {moduleName}',
+                ['moduleName' => $this->moduleName],
+                'user-mailer',
             );
         }
 
@@ -98,8 +77,9 @@ final class MailerUser
     {
         if (empty($this->newPasswordSubject)) {
             $this->newPasswordSubject = $this->translator->translate(
-                'Your password on {applicationName} has been changed',
-                ['applicationName' => $this->applicationName],
+                'Your password on {moduleName} has been changed',
+                ['moduleName' => $this->moduleName],
+                'user-mailer',
             );
         }
 
@@ -110,8 +90,9 @@ final class MailerUser
     {
         if (empty($this->reconfirmationSubject)) {
             $this->reconfirmationSubject = $this->translator->translate(
-                'Confirm email change on {applicationName}',
-                ['applicationName' => $this->applicationName]
+                'Confirm email change on {moduleName}',
+                ['moduleName' => $this->moduleName],
+                'user-mailer',
             );
         }
 
@@ -122,8 +103,9 @@ final class MailerUser
     {
         if (empty($this->recoverySubject)) {
             $this->recoverySubject = $this->translator->translate(
-                'Complete password reset on {applicationName}',
-                ['applicationName' => $this->applicationName]
+                'Complete password reset on {moduleName}',
+                ['moduleName' => $this->moduleName],
+                'user-mailer',
             );
         }
 
@@ -134,12 +116,18 @@ final class MailerUser
     {
         if (empty($this->welcomeSubject)) {
             $this->welcomeSubject = $this->translator->translate(
-                'Welcome to {applicationName}',
-                ['applicationName' => $this->applicationName],
+                'Welcome to {moduleName}',
+                ['moduleName' => $this->moduleName],
+                'user-mailer',
             );
         }
 
         return $this->welcomeSubject;
+    }
+
+    public function confirmationLayout(array $value): void
+    {
+        $this->confirmationLayout = $value;
     }
 
     public function confirmationSubject(string $value): void
@@ -147,9 +135,19 @@ final class MailerUser
         $this->confirmationSubject = $value;
     }
 
+    public function moduleName(string $value): void
+    {
+        $this->moduleName = $value;
+    }
+
     public function newPasswordSubject(string $value): void
     {
         $this->newPasswordSubject = $value;
+    }
+
+    public function reconfirmationLayout(array $value): void
+    {
+        $this->reconfirmationLayout = $value;
     }
 
     public function reconfirmationSubject(string $value): void
@@ -157,9 +155,30 @@ final class MailerUser
         $this->reconfirmationSubject = $value;
     }
 
+    public function recoveryLayout(array $value): void
+    {
+        $this->recoveryLayout = $value;
+    }
+
     public function recoverySubject(string $value): void
     {
         $this->recoverySubject = $value;
+    }
+
+    public function signatureImageEmail(string $value)
+    {
+        $this->signatureImageEmail = $value;
+        $this->file = File::fromPath($this->signatureImageEmail);
+    }
+
+    public function signatureTextEmail(string $value)
+    {
+        $this->signatureTextEmail = $value;
+    }
+
+    public function welcomeLayout(array $value): void
+    {
+        $this->welcomeLayout = $value;
     }
 
     public function welcomeSubject(string $value): void
@@ -167,15 +186,41 @@ final class MailerUser
         $this->welcomeSubject = $value;
     }
 
+    public function welcomeView(string $value): void
+    {
+        $this->welcomeView = $value;
+    }
+
+    public function viewPath(string $value): void
+    {
+        $this->viewPath = $value;
+
+        $viewPath = static fn (
+            MessageBodyRenderer $messageBodyRenderer, $attribute, $value
+        ) => $messageBodyRenderer->$attribute = $value;
+        $viewPath = Closure::bind($viewPath, null, $this->messageBodyRenderer);
+        $viewPath($this->messageBodyRenderer, 'viewPath', $this->viewPath);
+    }
+
     public function sendConfirmationMessage(string $email, array $params = []): bool
     {
         $message = $this->mailer->compose(
-            $this->confirmLayout,
-            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+            $this->confirmationLayout,
+            [
+                'moduleName' => $this->moduleName,
+                'translator' => $this->translator,
+                'params' => $params
+            ],
+            [
+                'signatureTextEmail' => $this->signatureTextEmail,
+                'translator' => $this->translator,
+                'file' => $this->file
+            ],
         )
-            ->setFrom($this->emailFrom)
-            ->setSubject($this->getConfirmationSubject())
-            ->setTo($email);
+            ->withFrom($this->emailFrom)
+            ->withSubject($this->getConfirmationSubject())
+            ->withTo($email)
+            ->withEmbedded($this->file);
 
         return $this->send($message);
     }
@@ -184,11 +229,21 @@ final class MailerUser
     {
         $message = $this->mailer->compose(
             $this->reconfirmationLayout,
-            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+            [
+                'moduleName' => $this->moduleName,
+                'translator' => $this->translator,
+                'params' => $params
+            ],
+            [
+                'signatureTextEmail' => $this->signatureTextEmail,
+                'translator' => $this->translator,
+                'file' => $this->file
+            ],
         )
-            ->setFrom($this->emailFrom)
-            ->setSubject($this->getRecoverySubject())
-            ->setTo($email);
+            ->withFrom($this->emailFrom)
+            ->withSubject($this->getRecoverySubject())
+            ->withTo($email)
+            ->withEmbedded($this->file);
 
         return $this->send($message);
     }
@@ -197,11 +252,21 @@ final class MailerUser
     {
         $message = $this->mailer->compose(
             $this->recoveryLayout,
-            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+            [
+                'moduleName' => $this->moduleName,
+                'translator' => $this->translator,
+                'params' => $params
+            ],
+            [
+                'signatureTextEmail' => $this->signatureTextEmail,
+                'translator' => $this->translator,
+                'file' => $this->file
+            ],
         )
-            ->setFrom($this->emailFrom)
-            ->setSubject($this->getRecoverySubject())
-            ->setTo($email);
+            ->withFrom($this->emailFrom)
+            ->withSubject($this->getRecoverySubject())
+            ->withTo($email)
+            ->withEmbedded($this->file);
 
         return $this->send($message);
     }
@@ -210,11 +275,21 @@ final class MailerUser
     {
         $message = $this->mailer->compose(
             $this->welcomeLayout,
-            ['applicationName' => $this->applicationName, 'translator' => $this->translator, 'params' => $params]
+            [
+                'moduleName' => $this->moduleName,
+                'translator' => $this->translator,
+                'params' => $params
+            ],
+            [
+                'signatureTextEmail' => $this->signatureTextEmail,
+                'translator' => $this->translator,
+                'file' => $this->file
+            ],
         )
-            ->setFrom($this->emailFrom)
-            ->setSubject($this->getWelcomeSubject())
-            ->setTo($email);
+            ->withFrom($this->emailFrom)
+            ->withSubject($this->getWelcomeSubject())
+            ->withTo($email)
+            ->withEmbedded($this->file);
 
         return $this->send($message);
     }

@@ -6,7 +6,7 @@ use Yiisoft\Html\Html;
 use Yiisoft\Translator\TranslatorInterface;
 
 /**
- * @var string $applicationName
+ * @var string $moduleName
  * @var array $params
  * @var TranslatorInterface $translator
  */
@@ -14,8 +14,8 @@ use Yiisoft\Translator\TranslatorInterface;
 <?= $translator->translate('Hello, {username},', ['username' => $params['username']], 'user-mailer') ?>
 
 <?= $translator->translate(
-    'We have received a request to change the email address for your account on {applicationName}.',
-    ['applicationName' => $applicationName],
+    'We have received a request to change the email address for your account on {moduleName}.',
+    ['moduleName' => $moduleName],
     'user-mailer',
 ) ?>
 
@@ -24,4 +24,3 @@ use Yiisoft\Translator\TranslatorInterface;
 <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
 
 <?= $translator->translate('If you cannot click the link, please try pasting the text into your browser.') ?>
-<?= $translator->translate('If you did not make this request you can ignore this email.') ?>

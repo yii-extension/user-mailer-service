@@ -10,21 +10,27 @@ use Yiisoft\Aliases\Aliases;
 return [
     MailerUser::class => [
         '__class' => MailerUser::class,
-        'applicationName()' => [$params['yii-extension/user-mailer-service']['applicationName']],
+        'moduleName()' => [$params['yii-extension/user-mailer-service']['moduleName']],
         'emailFrom()' => [$params['yii-extension/user-mailer-service']['emailFrom']],
-        'confirmLayout()' => [$params['yii-extension/user-mailer-service']['confirmLayout']],
-        'reconfirmationLayout()' => [$params['yii-extension/user-mailer-service']['reconfirmationLayout']],
-        'recoveryLayout()' => [$params['yii-extension/user-mailer-service']['recoveryLayout']],
-        'welcomeLayout()' => [$params['yii-extension/user-mailer-service']['welcomeLayout']],
+        'confirmationLayout()' => [$params['yii-extension/user-mailer-service']['confirmationLayout']],
         'confirmationSubject()' => [$params['yii-extension/user-mailer-service']['confirmationSubject']],
         'newPasswordSubject()' => [$params['yii-extension/user-mailer-service']['newPasswordSubject']],
+        'reconfirmationLayout()' => [$params['yii-extension/user-mailer-service']['reconfirmationLayout']],
         'reconfirmationSubject()' => [$params['yii-extension/user-mailer-service']['reconfirmationSubject']],
+        'recoveryLayout()' => [$params['yii-extension/user-mailer-service']['recoveryLayout']],
         'recoverySubject()' => [$params['yii-extension/user-mailer-service']['recoverySubject']],
+        'signatureImageEmail()' => [
+            fn (Aliases $aliases) => $aliases->get(
+                $params['yii-extension/user-mailer-service']['signatureImageEmail']
+            )
+        ],
+        'signatureTextEmail()' => [$params['yii-extension/user-mailer-service']['signatureTextEmail']],
+        'welcomeLayout()' => [$params['yii-extension/user-mailer-service']['welcomeLayout']],
+        'welcomeSubject()' => [$params['yii-extension/user-mailer-service']['welcomeSubject']],
         'viewPath()' =>  [
             fn (Aliases $aliases) => $aliases->get(
                 $params['yii-extension/user-mailer-service']['viewPath']
             )
         ],
-        'welcomeSubject()' => [$params['yii-extension/user-mailer-service']['welcomeSubject']],
-    ]
+    ],
 ];

@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 return [
     'yii-extension/user-mailer-service' => [
-        'applicationName' => 'module user',
+        // config main
+        'moduleName' => 'Module Yii-Extension/User',
         'emailFrom' => 'administrator@example.com',
+        'signatureImageEmail' => '@user-view-mailer/signature/yii-extension.jpg',
+        'signatureTextEmail' => 'Flexible user registration and authentication module for Yii3.',
         'viewPath' => '@user-view-mailer',
 
         // config layouts email
-        'confirmLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
+        'confirmationLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
         'reconfirmationLayout' => ['html' => 'reconfirmation', 'text' => 'text/reconfirmation'],
         'recoveryLayout' => ['html' => 'recovery', 'text' => 'text/recovery'],
         'welcomeLayout' =>  ['html' => 'welcome', 'text' => 'text/welcome'],
 
-        // config subject email
         'confirmationSubject' => '',
         'newPasswordSubject' => '',
         'reconfirmationSubject' => '',

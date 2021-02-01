@@ -2,7 +2,14 @@
 
 declare(strict_types=1);
 
-/** @var array $content */
+use Yiisoft\Html\Html;
+use Yiisoft\Mailer\File;
+
+/**
+ * @var array $content
+ * @var string $signatureTextEmail
+ * @var File $file
+ */
 ?>
 
 <?php $this->beginPage() ?>
@@ -18,9 +25,18 @@ declare(strict_types=1);
             <?= $content ?>
         <?php $this->endBody() ?>
 
-        <p class = 'mailer-html-p-content'>
-            © Web Application Basic <?= date('Y') ?>.
-        </p>
+        <div class = 'mailer-html-p-content'>
+            <?= Html::img($file->cid()) ?>
+        </div>
+        <div>
+            <?= $signatureTextEmail ?>
+        </div>
+        <div>
+            <br/>
+            <strong>
+                <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
+            </strong>
+        </div>
     </body>
 </html>
 <?php $this->endPage();

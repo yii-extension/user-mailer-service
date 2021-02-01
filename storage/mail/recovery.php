@@ -6,7 +6,7 @@ use Yiisoft\Html\Html;
 use Yiisoft\Translator\TranslatorInterface;
 
 /**
- * @var string $applicationName
+ * @var string $moduleName
  * @var array $params
  * @var TranslatorInterface $translator
  */
@@ -17,8 +17,8 @@ use Yiisoft\Translator\TranslatorInterface;
 
 <p class = 'mail-recovery'>
     <?= $translator->translate(
-        'We have received a request to reset the password for your account on {applicationName}.',
-        ['applicationName' => $applicationName],
+        'We have received a request to reset the password for your account on {moduleName}.',
+        ['moduleName' => $moduleName],
         'user-mailer',
     ) ?>
 
@@ -35,5 +35,4 @@ use Yiisoft\Translator\TranslatorInterface;
         [],
         'user-mailer',
     ) ?>
-    <?= $translator->translate('If you did not make this request you can ignore this email.', [], 'user-mailer') ?>
 </p>
