@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Yiisoft\Mailer\File;
 use Yiisoft\Mailer\MailerInterface;
 use Yiisoft\Mailer\MessageBodyRenderer;
+use Yiisoft\Mailer\MessageBodyTemplate;
 use Yiisoft\Mailer\MessageInterface;
 use Yiisoft\Translator\TranslatorInterface;
 
@@ -195,11 +196,11 @@ final class MailerUser
     {
         $this->viewPath = $value;
 
-        $viewPath = static fn (
-            MessageBodyRenderer $messageBodyRenderer, $attribute, $value
-        ) => $messageBodyRenderer->$attribute = $value;
-        $viewPath = Closure::bind($viewPath, null, $this->messageBodyRenderer);
-        $viewPath($this->messageBodyRenderer, 'viewPath', $this->viewPath);
+        $this->mailer = $this->mailer->withTemplate(
+            new MessageBodyTemplate(
+                $this->viewPath,
+            )
+        );
     }
 
     public function sendConfirmationMessage(string $email, array $params = []): bool
