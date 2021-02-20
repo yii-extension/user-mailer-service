@@ -25,9 +25,13 @@ final class MailerUser
     private string $viewPath = '';
 
     /** layouts emails */
-    private array $confirmLayout = [];
+    /** @var array<string, string> */
+    private array $confirmationLayout = [];
+    /** @var array<string, string> */
     private array $reconfirmationLayout = [];
+    /** @var array<string, string> */
     private array $recoveryLayout = [];
+    /** @var array<string, string> */
     private array $welcomeLayout = [];
 
     /** subjects messages */
@@ -41,8 +45,6 @@ final class MailerUser
     private MailerInterface $mailer;
     private MessageBodyRenderer $messageBodyRenderer;
     private TranslatorInterface $translator;
-
-    private Composer $composer;
 
     public function __construct(
         LoggerInterface $logger,
@@ -126,6 +128,9 @@ final class MailerUser
         return $this->welcomeSubject;
     }
 
+    /**
+     * @param array<string, string> $value
+     */
     public function confirmationLayout(array $value): void
     {
         $this->confirmationLayout = $value;
@@ -146,6 +151,9 @@ final class MailerUser
         $this->newPasswordSubject = $value;
     }
 
+    /**
+     * @param array<string, string> $value
+     */
     public function reconfirmationLayout(array $value): void
     {
         $this->reconfirmationLayout = $value;
@@ -156,6 +164,9 @@ final class MailerUser
         $this->reconfirmationSubject = $value;
     }
 
+    /**
+     * @param array<string, string> $value
+     */
     public function recoveryLayout(array $value): void
     {
         $this->recoveryLayout = $value;
@@ -166,17 +177,20 @@ final class MailerUser
         $this->recoverySubject = $value;
     }
 
-    public function signatureImageEmail(string $value)
+    public function signatureImageEmail(string $value): void
     {
         $this->signatureImageEmail = $value;
         $this->file = File::fromPath($this->signatureImageEmail);
     }
 
-    public function signatureTextEmail(string $value)
+    public function signatureTextEmail(string $value): void
     {
         $this->signatureTextEmail = $value;
     }
 
+    /**
+     * @param array<string, string> $value
+     */
     public function welcomeLayout(array $value): void
     {
         $this->welcomeLayout = $value;
@@ -185,11 +199,6 @@ final class MailerUser
     public function welcomeSubject(string $value): void
     {
         $this->welcomeSubject = $value;
-    }
-
-    public function welcomeView(string $value): void
-    {
-        $this->welcomeView = $value;
     }
 
     public function viewPath(string $value): void
@@ -220,8 +229,11 @@ final class MailerUser
         )
             ->withFrom($this->emailFrom)
             ->withSubject($this->getConfirmationSubject())
-            ->withTo($email)
-            ->withEmbedded($this->file);
+            ->withTo($email);
+
+        if ($this->file !== null) {
+            $message->withEmbedded($this->file);
+        }
 
         return $this->send($message);
     }
@@ -243,8 +255,11 @@ final class MailerUser
         )
             ->withFrom($this->emailFrom)
             ->withSubject($this->getRecoverySubject())
-            ->withTo($email)
-            ->withEmbedded($this->file);
+            ->withTo($email);
+
+        if ($this->file !== null) {
+            $message->withEmbedded($this->file);
+        }
 
         return $this->send($message);
     }
@@ -266,8 +281,11 @@ final class MailerUser
         )
             ->withFrom($this->emailFrom)
             ->withSubject($this->getRecoverySubject())
-            ->withTo($email)
-            ->withEmbedded($this->file);
+            ->withTo($email);
+
+        if ($this->file !== null) {
+            $message->withEmbedded($this->file);
+        }
 
         return $this->send($message);
     }
@@ -289,8 +307,11 @@ final class MailerUser
         )
             ->withFrom($this->emailFrom)
             ->withSubject($this->getWelcomeSubject())
-            ->withTo($email)
-            ->withEmbedded($this->file);
+            ->withTo($email);
+
+        if ($this->file !== null) {
+            $message->withEmbedded($this->file);
+        }
 
         return $this->send($message);
     }
