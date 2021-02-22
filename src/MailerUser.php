@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace Yii\Extension\User\Service;
 
-use Closure;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Yiisoft\Mailer\File;
 use Yiisoft\Mailer\MailerInterface;
-use Yiisoft\Mailer\MessageBodyRenderer;
 use Yiisoft\Mailer\MessageBodyTemplate;
 use Yiisoft\Mailer\MessageInterface;
 use Yiisoft\Translator\TranslatorInterface;
@@ -19,7 +17,6 @@ final class MailerUser
     /** general config */
     private string $emailFrom = '';
     private string $moduleName = '';
-    private string $signatureImageEmail = '';
     private string $signatureTextEmail = '';
     private ?File $file = null;
     private string $viewPath = '';
@@ -43,18 +40,15 @@ final class MailerUser
 
     private LoggerInterface $logger;
     private MailerInterface $mailer;
-    private MessageBodyRenderer $messageBodyRenderer;
     private TranslatorInterface $translator;
 
     public function __construct(
         LoggerInterface $logger,
         MailerInterface $mailer,
-        MessageBodyRenderer $messageBodyRenderer,
         TranslatorInterface $translator
     ) {
         $this->logger = $logger;
         $this->mailer = $mailer;
-        $this->messageBodyRenderer = $messageBodyRenderer;
         $this->translator = $translator;
     }
 
@@ -179,8 +173,7 @@ final class MailerUser
 
     public function signatureImageEmail(string $value): void
     {
-        $this->signatureImageEmail = $value;
-        $this->file = File::fromPath($this->signatureImageEmail);
+        $this->file = File::fromPath($value, basename($value), mime_content_type($value));
     }
 
     public function signatureTextEmail(string $value): void
@@ -231,10 +224,6 @@ final class MailerUser
             ->withSubject($this->getConfirmationSubject())
             ->withTo($email);
 
-        if ($this->file !== null) {
-            $message->withEmbedded($this->file);
-        }
-
         return $this->send($message);
     }
 
@@ -256,10 +245,6 @@ final class MailerUser
             ->withFrom($this->emailFrom)
             ->withSubject($this->getRecoverySubject())
             ->withTo($email);
-
-        if ($this->file !== null) {
-            $message->withEmbedded($this->file);
-        }
 
         return $this->send($message);
     }
@@ -283,10 +268,6 @@ final class MailerUser
             ->withSubject($this->getRecoverySubject())
             ->withTo($email);
 
-        if ($this->file !== null) {
-            $message->withEmbedded($this->file);
-        }
-
         return $this->send($message);
     }
 
@@ -309,15 +290,15 @@ final class MailerUser
             ->withSubject($this->getWelcomeSubject())
             ->withTo($email);
 
-        if ($this->file !== null) {
-            $message->withEmbedded($this->file);
-        }
-
         return $this->send($message);
     }
 
     private function send(MessageInterface $message): bool
     {
+        if ($this->file !== null) {
+            $message = $message->withEmbedded($this->file);
+        }
+
         $result = false;
 
         try {
