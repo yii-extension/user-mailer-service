@@ -9,7 +9,7 @@ use Yiisoft\Aliases\Aliases;
 
 return [
     MailerUser::class => [
-        '__class' => MailerUser::class,
+        'class' => MailerUser::class,
         'moduleName()' => [$params['yii-extension/user-mailer-service']['moduleName']],
         'emailFrom()' => [$params['yii-extension/user-mailer-service']['emailFrom']],
         'confirmationLayout()' => [$params['yii-extension/user-mailer-service']['confirmationLayout']],
