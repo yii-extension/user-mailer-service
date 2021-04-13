@@ -14,7 +14,7 @@
     "require": {
         "php": "^7.4|^8.0",
         "yii-extension/user-translations": "^1.0.0",
-        "yiisoft/html": "^3.0@dev",
+        "yiisoft/html": "^1.0",
         "yiisoft/mailer": "^3.0@dev",
         "yiisoft/mailer-swiftmailer": "^3.0@dev",
         "yiisoft/yii-event": "^3.0@dev"
