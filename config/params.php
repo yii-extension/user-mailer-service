@@ -26,7 +26,7 @@ return [
 
     'yiisoft/aliases' => [
         'aliases' => [
-            '@user-view-mailer' =>  '@vendor/yii-extension/storage/mail',
+            '@user-view-mailer' =>  '@vendor/yii-extension/user-mailer-service',
         ]
     ],
 ];
