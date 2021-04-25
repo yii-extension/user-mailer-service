@@ -12,10 +12,10 @@ return [
         'viewPath' => '@user-view-mailer',
 
         // config layouts email
-        'confirmationLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
-        'reconfirmationLayout' => ['html' => 'reconfirmation', 'text' => 'text/reconfirmation'],
-        'recoveryLayout' => ['html' => 'recovery', 'text' => 'text/recovery'],
-        'welcomeLayout' =>  ['html' => 'welcome', 'text' => 'text/welcome'],
+        'confirmationLayout' => ['html' => 'storage/confirmation', 'text' => 'storage/text/confirmation'],
+        'reconfirmationLayout' => ['html' => 'storage/reconfirmation', 'text' => 'storage/text/reconfirmation'],
+        'recoveryLayout' => ['html' => 'storage/recovery', 'text' => 'storage/text/recovery'],
+        'welcomeLayout' =>  ['html' => 'storage/welcome', 'text' => 'storage/text/welcome'],
 
         'confirmationSubject' => '',
         'newPasswordSubject' => '',
