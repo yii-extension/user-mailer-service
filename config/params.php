@@ -9,13 +9,13 @@ return [
         'emailFrom' => 'administrator@example.com',
         'signatureImageEmail' => '@user-view-mailer/storage/signature/yii-extension.jpg',
         'signatureTextEmail' => 'Flexible user registration and authentication module for Yii3.',
-        'viewPath' => '@user-view-mailer',
+        'viewPath' => '@user-view-mailer/storage',
 
         // config layouts email
-        'confirmationLayout' => ['html' => 'storage/confirmation', 'text' => 'storage/text/confirmation'],
-        'reconfirmationLayout' => ['html' => 'storage/reconfirmation', 'text' => 'storage/text/reconfirmation'],
-        'recoveryLayout' => ['html' => 'storage/recovery', 'text' => 'storage/text/recovery'],
-        'welcomeLayout' =>  ['html' => 'storage/welcome', 'text' => 'storage/text/welcome'],
+        'confirmationLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
+        'reconfirmationLayout' => ['html' => 'reconfirmation', 'text' => 'text/reconfirmation'],
+        'recoveryLayout' => ['html' => 'recovery', 'text' => 'text/recovery'],
+        'welcomeLayout' =>  ['html' => 'welcome', 'text' => 'text/welcome'],
 
         'confirmationSubject' => '',
         'newPasswordSubject' => '',
