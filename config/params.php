@@ -7,9 +7,9 @@ return [
         // config main
         'moduleName' => 'Module Yii-Extension/User',
         'emailFrom' => 'administrator@example.com',
-        'signatureImageEmail' => '@user-view-mailer/storage/mail/signature/yii-extension.jpg',
+        'signatureImageEmail' => '@user-view-mailer/storage/signature/yii-extension.jpg',
         'signatureTextEmail' => 'Flexible user registration and authentication module for Yii3.',
-        'viewPath' => '@user-view-mailer',
+        'viewPath' => '@user-view-mailer/storage',
 
         // config layouts email
         'confirmationLayout' => ['html' => 'confirmation', 'text' => 'text/confirmation'],
