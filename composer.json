@@ -13,7 +13,6 @@
     "prefer-stable": true,
     "require": {
         "php": "^7.4|^8.0",
-        "yii-extension/user-translations": "^1.0.0",
         "yiisoft/html": "^1.0",
         "yiisoft/mailer": "^3.0@dev",
         "yiisoft/mailer-swiftmailer": "^3.0@dev",
