@@ -19,10 +19,12 @@ use Yiisoft\Translator\TranslatorInterface;
     'user-mailer',
 ) ?>
 
-<?= $translator->translate('In order to complete your request, please click the link below:', 'user-mailer') ?>
+<?= $translator->translate('In order to complete your request, please click the link below:', [], 'user-mailer') ?>
 
 <strong><?= Html::a(Html::encode($params['url']), $params['url']) ?></strong>
 
 <?= $translator->translate(
-    'If you cannot click the link, please try pasting the text into your browser.'
+    'If you cannot click the link, please try pasting the text into your browser.',
+    [],
+    'user-mailer',
 ) ?>

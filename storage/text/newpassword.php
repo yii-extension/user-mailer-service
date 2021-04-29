@@ -18,5 +18,5 @@ use Yiisoft\Translator\TranslatorInterface;
     'user-mailer'
 ) ?>
 
-<?= $translator->translate('We have generated a password for you:', 'user-mailer') ?>
+<?= $translator->translate('We have generated a password for you:', [], 'user-mailer') ?>
 <strong><?= $params['password'] ?></strong>
