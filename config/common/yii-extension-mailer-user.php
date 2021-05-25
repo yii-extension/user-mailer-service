@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Yii\Extension\User\Service\MailerUser;
-use Yiisoft\Aliases\Aliases;
 
 /** @var array $params */
 
@@ -19,18 +18,10 @@ return [
         'reconfirmationSubject()' => [$params['yii-extension/user-mailer-service']['reconfirmationSubject']],
         'recoveryLayout()' => [$params['yii-extension/user-mailer-service']['recoveryLayout']],
         'recoverySubject()' => [$params['yii-extension/user-mailer-service']['recoverySubject']],
-        'signatureImageEmail()' => [
-            fn (Aliases $aliases) => $aliases->get(
-                $params['yii-extension/user-mailer-service']['signatureImageEmail']
-            )
-        ],
+        'signatureImageEmail()' => [$params['yii-extension/user-mailer-service']['signatureImageEmail']],
         'signatureTextEmail()' => [$params['yii-extension/user-mailer-service']['signatureTextEmail']],
         'welcomeLayout()' => [$params['yii-extension/user-mailer-service']['welcomeLayout']],
         'welcomeSubject()' => [$params['yii-extension/user-mailer-service']['welcomeSubject']],
-        'viewPath()' =>  [
-            fn (Aliases $aliases) => $aliases->get(
-                $params['yii-extension/user-mailer-service']['viewPath']
-            )
-        ],
+        'viewPath()' =>  [$params['yii-extension/user-mailer-service']['viewPath']],
     ],
 ];

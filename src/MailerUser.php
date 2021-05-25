@@ -6,6 +6,7 @@ namespace Yii\Extension\User\Service;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Yiisoft\Aliases\Aliases;
 use Yiisoft\Mailer\File;
 use Yiisoft\Mailer\MailerInterface;
 use Yiisoft\Mailer\MessageBodyTemplate;
@@ -38,15 +39,18 @@ final class MailerUser
     private string $recoverySubject = '';
     private string $welcomeSubject = '';
 
+    private Aliases $aliases;
     private LoggerInterface $logger;
     private MailerInterface $mailer;
     private TranslatorInterface $translator;
 
     public function __construct(
+        Aliases $aliases,
         LoggerInterface $logger,
         MailerInterface $mailer,
         TranslatorInterface $translator
     ) {
+        $this->aliases = $aliases;
         $this->logger = $logger;
         $this->mailer = $mailer;
         $this->translator = $translator;
@@ -173,6 +177,8 @@ final class MailerUser
 
     public function signatureImageEmail(string $value): void
     {
+        $value = $this->aliases->get($value);
+
         $this->file = File::fromPath($value, basename($value), mime_content_type($value));
     }
 
@@ -196,7 +202,7 @@ final class MailerUser
 
     public function viewPath(string $value): void
     {
-        $this->viewPath = $value;
+        $this->viewPath = $this->aliases->get($value);
 
         $this->mailer = $this->mailer->withTemplate(
             new MessageBodyTemplate(
