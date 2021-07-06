@@ -15,8 +15,8 @@
         "php": "^7.4|^8.0",
         "yiisoft/aliases": "^2.0.0",
         "yiisoft/html": "^1.0",
-        "yiisoft/mailer": "^3.0@dev",
-        "yiisoft/mailer-swiftmailer": "^3.0@dev",
+        "yiisoft/mailer": "^1.0.0",
+        "yiisoft/mailer-swiftmailer": "^1.0.0",
         "yiisoft/translator": "^1.0.0"
     },
     "require-dev": {
